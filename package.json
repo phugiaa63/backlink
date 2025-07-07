@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "dotenv": "^17.0.1",
+    "express": "^5.1.0"
+  },
+  "name": "backlink",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phugiaa63/backlink.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phugiaa63/backlink/issues"
+  },
+  "homepage": "https://github.com/phugiaa63/backlink#readme"
+}
