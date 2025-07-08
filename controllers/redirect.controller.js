@@ -1,12 +1,25 @@
 const path = require('path');
+const ipRangeCheck = require('ip-range-check');
 
 const knownGoogleBotIPs = [
-  // Thêm các dải IP Googlebot nếu muốn kiểm tra IP (tùy chọn)
-  // '66.249.64.0/19', ...
+  // Dải IP Googlebot chính thức (ví dụ, có thể mở rộng thêm)
+  '66.249.64.0/19',
+  '64.233.160.0/19',
+  '72.14.192.0/18',
+  '203.208.60.0/24',
+  '74.125.0.0/16',
+  '209.85.128.0/17',
+  '216.239.32.0/19',
+  '66.102.0.0/20',
+  '64.18.0.0/20',
+  '207.126.144.0/20',
+  '173.194.0.0/16',
+  '108.177.8.0/21',
+  '35.191.0.0/16',
+  '130.211.0.0/22',
 ];
 
 function isGoogleBot(userAgent, req) {
-  // Nâng cao nhận diện Googlebot với nhiều biến thể và kiểm tra IP (nếu cần)
   const botPatterns = [
     /googlebot/i,
     /adsbot-google/i,
@@ -28,11 +41,17 @@ function isGoogleBot(userAgent, req) {
     /facebot/i,
     /ia_archiver/i
   ];
-  // Kiểm tra User-Agent
   const isBotUA = botPatterns.some((re) => re.test(userAgent));
-  // Có thể kiểm tra thêm header hoặc IP ở đây nếu muốn
-  // Ví dụ: kiểm tra x-forwarded-for hoặc req.ip
-  return isBotUA;
+  if (!isBotUA) return false;
+  // Kiểm tra IP nếu là Googlebot
+  if (/googlebot/i.test(userAgent)) {
+    const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.ip;
+    if (!ipRangeCheck(ip, knownGoogleBotIPs)) {
+      console.warn('⚠️ Googlebot UA nhưng IP không hợp lệ:', ip);
+      return false;
+    }
+  }
+  return true;
 }
 
 exports.handleRedirect = async (req, res) => {

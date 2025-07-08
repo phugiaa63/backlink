@@ -51,6 +51,84 @@
             margin-top: 0;
         }
 
+        .cta-section {
+            background: #eaf4ff;
+            border-radius: 8px;
+            padding: 24px 20px;
+            text-align: center;
+            margin-bottom: 32px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+
+        .cta-section h2 {
+            margin-bottom: 10px;
+        }
+
+        .cta-btn {
+            background: #005baa;
+            color: #fff;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: background 0.2s;
+        }
+
+        .cta-btn:hover {
+            background: #003f7d;
+        }
+
+        .contact-form {
+            margin-top: 30px;
+            background: #f8fafc;
+            padding: 24px 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+
+        .contact-form label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #cfd8dc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        .contact-form button {
+            background: #005baa;
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .contact-form button:hover {
+            background: #003f7d;
+        }
+
+        .form-success {
+            color: #2e7d32;
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            padding: 10px 16px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
         footer {
             background: #003f7d;
             color: #fff;
@@ -76,14 +154,7 @@
             Quốc Tế Phương Nam - Công Ty TNHH Quốc Tế Phương Nam (Giao Nhận Vận Tải Quốc Tế)</h1>
         <p>Giới thiệu chính thức</p>
         <p>Quốc Tế Phương Nam - Sẵn sàng đáp ứng mọi nhu cầu về dịch vụ Logistics <br>
-             Giao nhận hàng hóa xuất/ nhập khẩu bằng đường biển, đường hàng không, đường bộ, đường sắt.<br>
-             Đóng gói hàng hóa hút chân không, buộc hàng vào container.<br>
-             Tư vấn thủ tục hải quan, kho bãi.<br>
-             Thực hiện thủ tục xuất nhập khẩu hàng hóa.<br>
-            Cùng với:<br>
-             Mạng lưới đại lý rộng khắp toàn cầu.<br>
-             Hơn 22 năm kinh nghiệm hoạt động.<br>
-            → Cam kết:<br> Dịch vụ chất lượng - Thời gian nhanh chóng - Tiết giảm chi phí.</p>
+     
     </header>
     <nav>
         <a href="#">Trang chủ</a>
@@ -92,6 +163,11 @@
         <a href="#">Liên hệ</a>
     </nav>
     <div class="container">
+        <div class="cta-section">
+            <h2>Bạn cần tư vấn vận tải quốc tế?</h2>
+            <p>Liên hệ ngay với chúng tôi để nhận giải pháp tối ưu và báo giá nhanh nhất!</p>
+            <a href="#contact-form"><button class="cta-btn">Nhận tư vấn miễn phí</button></a>
+        </div>
         <h2>Về chúng tôi</h2>
         <p>Công ty ABC là đơn vị tiên phong trong lĩnh vực cung cấp giải pháp công nghệ tại Việt Nam. Chúng tôi cam kết
             minh bạch, không chứa nội dung tiếp thị.</p>
@@ -110,10 +186,33 @@
         </ul>
         <h2>Liên hệ</h2>
         <p>Vui lòng gửi email hoặc gọi điện để được hỗ trợ nhanh nhất.</p>
+        <form class="contact-form" id="contact-form" autocomplete="off" onsubmit="return submitForm(event)">
+            <div class="form-success" id="form-success">Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất.</div>
+            <label for="name">Họ và tên *</label>
+            <input type="text" id="name" name="name" required placeholder="Nhập họ và tên của bạn">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required placeholder="Nhập email của bạn">
+            <label for="phone">Số điện thoại</label>
+            <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại (không bắt buộc)">
+            <label for="message">Nội dung *</label>
+            <textarea id="message" name="message" rows="4" required placeholder="Bạn cần hỗ trợ gì?"></textarea>
+            <button type="submit">Gửi liên hệ</button>
+        </form>
     </div>
     <footer>
         &copy; 2024 Quốc Tế Phương Nam. Bản quyền đã được bảo hộ.
     </footer>
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            document.getElementById('form-success').style.display = 'block';
+            setTimeout(function () {
+                document.getElementById('form-success').style.display = 'none';
+                document.getElementById('contact-form').reset();
+            }, 3500);
+            return false;
+        }
+    </script>
 </body>
 
 </html>
