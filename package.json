@@ -2,7 +2,8 @@
   "dependencies": {
     "dotenv": "^17.0.1",
     "express": "^5.1.0",
-    "ip-range-check": "^0.2.0"
+    "ip-range-check": "^0.2.0",
+    "isbot": "^4.2.0"
   },
   "name": "backlink",
   "version": "1.0.0",
